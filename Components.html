@@ -1,0 +1,126 @@
+<!-- Shared states -->
+<section class="loading-screen" id="loadingScreen">
+<div class="loading-card">
+<div class="loading-logo">SF</div>
+<h1 class="loading-title">
+        Demo School - Fee Management System
+      </h1>
+<p class="loading-description">
+        Loading the application and validating access.
+      </p>
+<div aria-label="Loading" class="spinner"></div>
+</div>
+</section>
+
+<section class="access-screen hidden" id="accessScreen">
+<div class="access-card">
+<div class="access-icon">
+<span id="accessIcon"></span>
+</div>
+<h1>Access unavailable</h1>
+<p id="accessMessage">
+        The application could not create an authorised session.
+      </p>
+<div class="access-actions">
+<button class="button button-primary" onclick="loadApplication()" type="button">
+          Try again
+        </button>
+
+</div>
+</div>
+</section>
+
+
+<div id="applicationShell" class="app-shell hidden">
+  <div class="sidebar-overlay" id="sidebarOverlay" onclick="closeMobileSidebar()"></div>
+  <aside class="sidebar" id="sidebar">
+<div class="sidebar-brand"><div class="brand-mark portfolio-brand-mark">DS</div><div class="brand-text"><p class="brand-title">Demo School</p><p class="brand-subtitle">Fee Management</p></div></div>
+<nav class="sidebar-navigation">
+<div class="navigation-label">
+          Main menu
+        </div>
+<div class="navigation-list" id="navigationList"></div>
+</nav>
+<div class="sidebar-footer">
+<div class="sidebar-user">
+<div class="sidebar-avatar" id="sidebarUserInitials">
+            U
+          </div>
+<div class="sidebar-user-details">
+<div class="sidebar-user-name" id="sidebarUserName">
+              User
+            </div>
+<div class="sidebar-user-role" id="sidebarUserRole">
+              Role
+            </div>
+</div>
+</div>
+</div>
+</aside>
+  <div class="main-area">
+    <header class="top-header">
+<div class="header-left">
+<button aria-label="Open menu" class="mobile-menu-button" onclick="openMobileSidebar()" type="button">
+<span id="menuIcon"></span>
+</button>
+<div class="school-header-brand">
+<h1>DEMO SCHOOL</h1>
+<p>School Fee Management System</p>
+<span class="school-header-accent"></span>
+</div>
+<div aria-hidden="true" class="visually-hidden">
+<span id="pageTitle">Dashboard</span>
+<span id="pageSubtitle">School fee collection overview</span>
+</div>
+</div>
+<div class="header-right">
+<div class="academic-year-badge" id="academicYearBadge">2025–2026</div>
+</div>
+
+</header>
+    <main id="pageMount" class="main-content"></main>
+  </div>
+</div>
+
+<div aria-live="polite" class="toast-container" id="toastContainer"></div>
+<div class="overlay hidden" id="reversePaymentOverlay">
+<div class="modal reverse-payment-modal">
+<h2>Reverse Payment</h2>
+<div class="modal-info">
+<div>
+<strong>Receipt</strong>
+<p id="reverseReceiptNumber">—</p>
+</div>
+<div>
+<strong>Original Amount</strong>
+<p id="reverseAmount">—</p>
+</div>
+<div>
+<strong>Remaining Reversible</strong>
+<p id="reverseRemainingAmount">—</p>
+</div>
+</div>
+<label for="reverseAmountInput">
+            Reversal Amount
+        </label>
+<input id="reverseAmountInput" inputmode="decimal" min="0.01" placeholder="Enter amount to reverse" step="0.01" type="number"/>
+<label for="reverseReason">
+
+            Reversal Reason
+
+        </label>
+<textarea id="reverseReason" placeholder="Why is this payment being reversed?" rows="4"></textarea>
+<div class="modal-buttons">
+<button class="button button-secondary" onclick="closeReversePaymentModal()" type="button">
+
+                Cancel
+
+            </button>
+<button class="button button-danger" id="confirmReverseButton" type="button">
+
+                Save Reversal
+
+            </button>
+</div>
+</div>
+</div>

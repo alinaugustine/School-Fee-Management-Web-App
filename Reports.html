@@ -1,0 +1,158 @@
+<!-- Reports -->
+<section class="page-section" id="page-reports">
+<div class="page-heading-row">
+<div>
+<h2 class="page-title">
+        Student Outreach Report
+      </h2>
+<p class="page-subtitle">
+        Track unpaid students, payment progress and student targets.
+      </p>
+</div>
+</div>
+<div class="report-filter-card">
+<div class="report-filter-grid">
+<div class="form-field report-search-field">
+<label for="reportSearch">
+          Search
+        </label>
+<input autocomplete="off" id="reportSearch" placeholder="Search student, parent or phone" type="search"/>
+</div>
+<div class="form-field">
+<label for="reportClassFilter">
+          Class
+        </label>
+<select id="reportClassFilter">
+<option value="">
+            All classes
+          </option>
+</select>
+</div>
+<div class="form-field">
+<label for="reportSectionFilter">
+          Section
+        </label>
+<select id="reportSectionFilter">
+<option value="">
+            All sections
+          </option>
+</select>
+</div>
+<div class="form-field">
+<label for="reportSort">
+          Sort by
+        </label>
+<select id="reportSort">
+<option value="name-asc">
+            Student name A–Z
+          </option>
+<option value="name-desc">
+            Student name Z–A
+          </option>
+<option value="class-asc">
+            Class
+          </option>
+<option value="unpaid-first">
+            No payment first
+          </option>
+<option value="partial-first">
+            Partially paid first
+          </option>
+</select>
+</div>
+</div>
+</div>
+<div class="report-summary-grid outreach-summary-grid">
+<article class="report-summary-card">
+<div class="report-summary-label">
+        Students Requiring Outreach
+      </div>
+<div class="report-summary-value" id="reportStudentCount">
+        0
+      </div>
+<div class="report-summary-note" id="reportStudentCountNote">
+        Out of 0 active fee-paying students
+      </div>
+</article>
+<article class="report-summary-card">
+<div class="report-summary-label">
+        No Payment Received
+      </div>
+<div class="report-summary-value report-value-danger" id="reportUnpaidCount">
+        0
+      </div>
+<div class="report-summary-note">
+        Students who have not made any payment
+      </div>
+</article>
+<article class="report-summary-card">
+<div class="report-summary-label">
+        Partially Paid
+      </div>
+<div class="report-summary-value report-value-warning" id="reportPartialCount">
+        0
+      </div>
+<div class="report-summary-note">
+        Students who still require follow-up
+      </div>
+</article>
+<article class="report-summary-card">
+<div class="report-summary-label">
+        Fully Paid
+      </div>
+<div class="report-summary-value report-value-success" id="reportPaidCount">
+        0
+      </div>
+<div class="report-summary-note">
+        Students whose fees are complete
+      </div>
+</article>
+</div>
+<article class="dashboard-panel outreach-progress-panel">
+<div class="panel-header">
+<div>
+<h3 class="panel-title">
+          Student Payment Completion
+        </h3>
+<p class="panel-subtitle">
+          Fully paid students out of all active fee-paying students.
+        </p>
+</div>
+<div class="collection-rate-badge" id="reportCompletionRate">
+        0%
+      </div>
+</div>
+<div class="collection-progress-track">
+<div class="collection-progress-bar" id="reportCompletionBar" style="width: 0%;"></div>
+</div>
+<div class="outreach-progress-message">
+<strong id="reportCompletionText">
+        0 of 0 students fully paid
+      </strong>
+<span id="reportRemainingText">
+        0 students remaining
+      </span>
+</div>
+</article>
+<div class="table-card">
+<div class="table-scroll">
+<table class="data-table reports-table">
+<thead>
+<tr>
+<th>Student</th>
+<th>Class</th>
+<th>Section</th>
+<th>Father Contact</th>
+<th>Mother Contact</th>
+<th>Payment Status</th>
+</tr>
+</thead>
+<tbody id="reportTableBody">
+</tbody>
+</table>
+</div>
+<div class="empty-table-message" id="reportEmptyState">
+      Students requiring outreach will appear here.
+    </div>
+</div>
+</section>

@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <base target="_top">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <title>Demo School - Fee Management System</title>
+  <link rel="stylesheet" href="../css/styles.css">
+</head>
+<body>
+  <div id="root"></div>
+
+  <script>
+    const fragments = [
+      'Components.html',
+      'Dashboard.html',
+      'Students.html',
+      'AddStudent.html',
+      'Reports.html',
+      'Settings.html'
+    ];
+
+    async function bootstrapFrontend() {
+      const root = document.getElementById('root');
+
+      try {
+        const markup = await Promise.all(
+          fragments.map(function(fileName) {
+            return fetch(fileName).then(function(response) {
+              if (!response.ok) throw new Error('Unable to load ' + fileName);
+              return response.text();
+            });
+          })
+        );
+
+        root.innerHTML = markup[0];
+
+        const mount = document.getElementById('pageMount');
+        if (!mount) throw new Error('Application mount is missing.');
+
+        markup.slice(1).forEach(function(fragment) {
+          mount.insertAdjacentHTML('beforeend', fragment);
+        });
+
+        await loadScripts([
+          '../js/utils.js',
+          '../js/dashboard.js',
+          '../js/students.js',
+          '../js/reports.js',
+          '../js/payments.js',
+          '../js/settings.js',
+          '../js/app.js'
+        ]);
+      } catch (error) {
+        root.innerHTML =
+          '<main class="access-screen"><section class="access-card">' +
+          '<h1>Application unavailable</h1><p>' +
+          escapeStartup(error.message || String(error)) +
+          '</p></section></main>';
+      }
+    }
+
+    function loadScripts(files) {
+      return files.reduce(function(sequence, file) {
+        return sequence.then(function() {
+          return new Promise(function(resolve, reject) {
+            const script = document.createElement('script');
+            script.src = file;
+            script.onload = resolve;
+            script.onerror = function() {
+              reject(new Error('Unable to load ' + file));
+            };
+            document.body.appendChild(script);
+          });
+        });
+      }, Promise.resolve());
+    }
+
+    function escapeStartup(value) {
+      return String(value || '')
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#039;');
+    }
+
+    bootstrapFrontend();
+  </script>
+</body>
+</html>

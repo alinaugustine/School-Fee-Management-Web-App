@@ -1,0 +1,102 @@
+<!-- Add Student -->
+<div class="add-student-overlay" hidden="" id="addStudentOverlay" onclick="closeAddStudentPanel()"></div>
+
+<aside aria-hidden="true" class="add-student-panel" id="addStudentPanel">
+<div class="add-student-header">
+<div>
+<p class="add-student-eyebrow">Student administration</p>
+<h2>Add Student</h2>
+<p>Create a new student fee account.</p>
+</div>
+<button aria-label="Close add student form" class="add-student-close" onclick="closeAddStudentPanel()" type="button">
+      ×
+    </button>
+</div>
+<form class="add-student-form" id="addStudentForm">
+<div class="add-student-grid">
+<div class="form-field">
+<label for="newStudentId">Student ID</label>
+<input aria-readonly="true" class="student-id-generated" id="newStudentId" name="studentId" readonly="" tabindex="-1" type="text" value="Generated automatically"/>
+<p class="form-field-hint">
+          A unique ID will be created when the student is saved.
+        </p>
+</div>
+<div class="form-field">
+<label for="newStudentName">Student name</label>
+<input id="newStudentName" name="studentName" required="" type="text"/>
+</div>
+<div class="form-field">
+<label for="newStudentClass">Class</label>
+<select id="newStudentClass" name="className" onchange="updateStudentTotalFee()" required="">
+<option value="">Select class</option>
+<option value="Nursery">Nursery</option>
+<option value="LKG">LKG</option>
+<option value="UKG">UKG</option>
+<option value="1">Class 1</option>
+<option value="2">Class 2</option>
+<option value="3">Class 3</option>
+<option value="4">Class 4</option>
+<option value="5">Class 5</option>
+<option value="6">Class 6</option>
+<option value="7">Class 7</option>
+<option value="8">Class 8</option>
+</select>
+</div>
+<div class="form-field">
+<label for="newStudentSection">Section</label>
+<input id="newStudentSection" name="section" type="text"/>
+</div>
+<div class="form-field add-student-full-width">
+<label for="newStudentAdmissionDate">Admission date</label>
+<input id="newStudentAdmissionDate" name="admissionDate" type="date"/>
+</div>
+<div class="form-field">
+<label for="newStudentFatherName">Father name</label>
+<input id="newStudentFatherName" name="fatherName" type="text"/>
+</div>
+<div class="form-field">
+<label for="newStudentFatherPhone">Father phone</label>
+<input id="newStudentFatherPhone" name="fatherPhone" type="tel"/>
+</div>
+<div class="form-field">
+<label for="newStudentMotherName">Mother name</label>
+<input id="newStudentMotherName" name="motherName" type="text"/>
+</div>
+<div class="form-field">
+<label for="newStudentMotherPhone">Mother phone</label>
+<input id="newStudentMotherPhone" name="motherPhone" type="tel"/>
+</div>
+<div class="form-field">
+<label for="newStudentFundingType">Funding type</label>
+<select id="newStudentFundingType" name="fundingType" onchange="handleFundingTypeChange()">
+<option value="Regular">Regular</option>
+<option value="RTE">RTE</option>
+</select>
+</div>
+<div class="form-field">
+<label for="newStudentTotalFee">Total fee</label>
+<input aria-readonly="true" class="student-id-generated" id="newStudentTotalFee" name="totalFee" readonly="" tabindex="-1" type="number" value="0"/>
+<p class="form-field-hint" id="newStudentTotalFeeHint">
+          Select a class to assign the standard fee automatically.
+        </p>
+</div>
+<div class="form-field">
+<label for="newStudentStatus">Status</label>
+<select id="newStudentStatus" name="studentStatus">
+<option value="Active">Active</option>
+<option value="Inactive">Inactive</option>
+</select>
+</div>
+</div>
+<div class="add-student-message add-student-error" hidden="" id="addStudentError"></div>
+<div class="add-student-message add-student-success" hidden="" id="addStudentSuccess"></div>
+<div class="add-student-actions">
+<button class="button button-primary" id="saveStudentButton" type="submit">
+        Save Student
+      </button>
+<button class="button button-secondary" onclick="closeAddStudentPanel()" type="button">
+        Cancel
+      </button>
+</div>
+</form>
+</aside>

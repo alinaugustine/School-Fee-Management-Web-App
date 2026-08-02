@@ -1,0 +1,292 @@
+<!-- Students and payment panels -->
+<section class="page-section" id="page-students">
+<div class="page-heading-row">
+<div>
+<h2 class="page-title">Students</h2>
+<p class="page-subtitle">
+        Search students and review their fee balances.
+      </p>
+</div>
+<button class="button button-secondary" id="refreshStudentsButton" onclick="loadStudents(true)" type="button">
+<span aria-hidden="true" class="button-icon">
+        ↻
+      </span>
+      Refresh
+    </button>
+</div>
+<div class="student-search-card">
+<div class="student-filter-grid">
+<div class="form-field student-search-field">
+<label for="studentSearchInput">
+          Search
+        </label>
+<input autocomplete="off" id="studentSearchInput" oninput="applyStudentFilters()" placeholder="Search by student name or ID" type="search"/>
+</div>
+<div class="form-field">
+<label for="studentClassFilter">
+          Class
+        </label>
+<select id="studentClassFilter" onchange="applyStudentFilters()">
+<option value="">All classes</option>
+</select>
+</div>
+<div class="form-field">
+<label for="studentSectionFilter">
+          Section
+        </label>
+<select id="studentSectionFilter" onchange="applyStudentFilters()">
+<option value="">All sections</option>
+</select>
+</div>
+<div class="form-field">
+<label for="studentStatusFilter">
+          Payment status
+        </label>
+<select id="studentStatusFilter" onchange="applyStudentFilters()">
+<option value="">All statuses</option>
+</select>
+</div>
+<div class="student-filter-action">
+<button class="button button-secondary" id="clearStudentFiltersButton" type="button">
+          Clear filters
+        </button>
+</div>
+</div>
+</div>
+<div class="student-results-header">
+<p id="studentResultsCount">
+      Loading students...
+    </p>
+</div>
+<div class="state-card" id="studentsLoadingState">
+    Loading student records...
+  </div>
+<div class="state-card state-card-error" hidden="" id="studentsErrorState">
+</div>
+<div class="state-card" hidden="" id="studentsEmptyState">
+    No students match the selected filters.
+  </div>
+<div class="table-card" hidden="" id="studentsTableContainer">
+<div class="table-scroll">
+<table class="data-table students-table">
+<colgroup>
+<col style="width:10%"/>
+<col style="width:18%"/>
+<col style="width:7%"/>
+<col style="width:5%"/>
+<col style="width:8%"/>
+<col style="width:7%"/>
+<col style="width:10%"/>
+<col style="width:28%"/>
+<col style="width:7%"/>
+</colgroup>
+<thead>
+<tr>
+<th class="col-student-id">Student ID</th>
+<th class="col-student">Student</th>
+<th class="col-class">Class</th>
+<th class="col-section">Section</th>
+<th class="col-money">Total Fee</th>
+<th class="col-money">Paid</th>
+<th class="col-money">Outstanding</th>
+<th class="col-progress">Progress</th>
+<th aria-label="Student action" class="col-view"></th>
+</tr>
+</thead>
+<tbody id="studentsTableBody">
+</tbody>
+</table>
+</div>
+</div>
+</section>
+
+<div class="student-detail-overlay" hidden="" id="studentDetailOverlay" onclick="closeStudentDetailPanel()"></div>
+
+<aside aria-hidden="true" class="student-detail-panel" id="studentDetailPanel">
+<div class="student-detail-header">
+<div>
+<p class="student-detail-eyebrow">
+      Student record
+    </p>
+<h2 id="studentDetailName">
+      Student
+    </h2>
+<p id="studentDetailId">
+      Student ID
+    </p>
+</div>
+<div class="student-detail-header-actions">
+<button class="button button-secondary" disabled="" id="editStudentButton" type="button">
+      Edit
+    </button>
+<button aria-label="Close student record" class="student-detail-close" onclick="closeStudentDetailPanel()" type="button">
+      ×
+    </button>
+</div>
+</div>
+<div class="student-detail-state" id="studentDetailLoading">
+    Loading student information...
+  </div>
+<div class="student-detail-state student-detail-error" hidden="" id="studentDetailError"></div>
+<div class="student-detail-content" hidden="" id="studentDetailContent">
+<section class="student-detail-section">
+<h3>Student information</h3>
+<div class="student-detail-grid">
+<div>
+<span>Class</span>
+<strong id="studentDetailClass">—</strong>
+</div>
+<div>
+<span>Section</span>
+<strong id="studentDetailSection">—</strong>
+</div>
+<div>
+<span>Father</span>
+<strong id="studentDetailFatherName">—</strong>
+</div>
+<div>
+<span>Father phone</span>
+<strong id="studentDetailFatherPhone">—</strong>
+</div>
+<div>
+<span>Mother</span>
+<strong id="studentDetailMotherName">—</strong>
+</div>
+<div>
+<span>Mother phone</span>
+<strong id="studentDetailMotherPhone">—</strong>
+</div>
+</div>
+<section class="student-detail-section">
+<h3>Fee summary</h3>
+<div class="student-detail-summary">
+<div>
+<span>Funding type</span>
+<strong id="studentDetailFundingType">Regular</strong>
+</div>
+<div>
+<span>Total fee</span>
+<strong id="studentDetailTotalFee">₹0</strong>
+</div>
+<div>
+<span>Paid</span>
+<strong id="studentDetailAmountPaid">₹0</strong>
+</div>
+<div>
+<span>Outstanding</span>
+<strong id="studentDetailOutstanding">₹0</strong>
+</div>
+<div>
+<span>Status</span>
+<strong id="studentDetailStatus">—</strong>
+</div>
+</div>
+</section>
+<section class="student-detail-section">
+<div class="student-detail-section-header">
+<h3>Payment history</h3>
+</div>
+<div class="student-payment-history-empty" id="studentPaymentHistoryEmpty">
+        No payments have been recorded for this student.
+      </div>
+<div class="student-payment-history-container" hidden="" id="studentPaymentHistoryContainer">
+<table class="student-payment-history-table">
+<thead>
+<tr>
+<th>Date</th>
+<th>Receipt</th>
+<th>Method</th>
+<th>Reference</th>
+<th>Entered By</th>
+<th>Amount</th>
+<th>Actions</th>
+</tr>
+</thead>
+<tbody id="studentPaymentHistoryBody"></tbody>
+</table>
+</div>
+</section>
+</section></div>
+<div class="student-detail-footer">
+<button class="button button-primary" disabled="" id="studentDetailRecordPaymentButton" type="button">
+      Record Payment
+    </button>
+<button class="button button-secondary" onclick="closeStudentDetailPanel()" type="button">
+      Close
+    </button>
+</div>
+</aside>
+
+<div class="record-payment-overlay" hidden="" id="recordPaymentOverlay" onclick="closeRecordPaymentPanel()"></div>
+
+<aside aria-hidden="true" class="record-payment-panel" id="recordPaymentPanel">
+<div class="record-payment-header">
+<div>
+<p class="record-payment-eyebrow">
+        Fee collection
+      </p>
+<h2>Record Payment</h2>
+<p id="recordPaymentStudentLabel">
+        Select a student
+      </p>
+</div>
+<button aria-label="Close payment form" class="record-payment-close" onclick="closeRecordPaymentPanel()" type="button">
+      ×
+    </button>
+</div>
+<form class="record-payment-form" id="recordPaymentForm">
+<input id="recordPaymentStudentId" name="studentId" type="hidden"/>
+<div class="form-field">
+<label for="recordPaymentDate">
+        Payment date
+      </label>
+<input id="recordPaymentDate" name="paymentDate" required="" type="date"/>
+</div>
+<div class="form-field">
+<label for="recordPaymentAmount">
+        Amount
+      </label>
+<input id="recordPaymentAmount" min="0.01" name="amount" placeholder="Enter amount" required="" step="0.01" type="number"/>
+<p class="form-field-hint" id="recordPaymentBalanceHint">
+        Outstanding balance: ₹0
+      </p>
+</div>
+<div class="form-field">
+<label for="recordPaymentMethod">
+        Payment method
+      </label>
+<select id="recordPaymentMethod" name="paymentMethod" required="">
+<option value="">
+          Select payment method
+        </option>
+<option value="Cash">Cash</option>
+<option value="Bank Transfer">Bank Transfer</option>
+<option value="Card">Card</option>
+<option value="UPI">UPI</option>
+<option value="Cheque">Cheque</option>
+</select>
+</div>
+<div class="form-field">
+<label for="recordPaymentReference">
+        Reference number
+      </label>
+<input id="recordPaymentReference" name="referenceNumber" placeholder="Optional for cash" type="text"/>
+</div>
+<div class="form-field">
+<label for="recordPaymentNotes">
+        Notes
+      </label>
+<textarea id="recordPaymentNotes" name="notes" placeholder="Optional notes" rows="4"></textarea>
+</div>
+<div class="record-payment-message record-payment-error" hidden="" id="recordPaymentError"></div>
+<div class="record-payment-message record-payment-success" hidden="" id="recordPaymentSuccess"></div>
+<div class="record-payment-actions">
+<button class="button button-primary" id="savePaymentButton" type="submit">
+        Save Payment
+      </button>
+<button class="button button-secondary" onclick="closeRecordPaymentPanel()" type="button">
+        Cancel
+      </button>
+</div>
+</form>
+</aside>

@@ -1,0 +1,221 @@
+<!-- Dashboard -->
+<section class="page-section active" id="page-dashboard">
+<div class="dashboard-toolbar">
+<div>
+<h2 class="section-heading">Fee Collection Overview</h2>
+<p class="section-description">
+        Current student fees, collections and outstanding balances.
+      </p>
+</div>
+<button class="button button-secondary" id="dashboardRefreshButton" onclick="loadDashboardData(true)" type="button">
+<span id="refreshIcon"></span>
+      Refresh
+    </button>
+</div>
+<div class="dashboard-message dashboard-error hidden" id="dashboardError"></div>
+<div class="dashboard-loading" id="dashboardLoading">
+<div class="dashboard-loading-spinner"></div>
+<span>Loading dashboard information...</span>
+</div>
+<div class="hidden" id="dashboardContent">
+<div class="dashboard-cards">
+<article class="metric-card">
+<div class="metric-card-header">
+<span class="metric-label">Active Students</span>
+<span class="metric-icon metric-icon-blue">
+<span data-dashboard-icon="students"></span>
+</span>
+</div>
+<div class="metric-value" id="metricTotalStudents">
+          0
+        </div>
+<div class="metric-footer">
+          Students included in fee tracking
+        </div>
+</article>
+<article class="metric-card">
+<div class="metric-card-header">
+<span class="metric-label">Total Fees</span>
+<span class="metric-icon metric-icon-purple">
+<span data-dashboard-icon="fees"></span>
+</span>
+</div>
+<div class="metric-value" id="metricTotalFees">
+          ₹0
+        </div>
+<div class="metric-footer">
+          Total fees charged to active students
+        </div>
+</article>
+<article class="metric-card">
+<div class="metric-card-header">
+<span class="metric-label">Payments Received</span>
+<span class="metric-icon metric-icon-green">
+<span data-dashboard-icon="received"></span>
+</span>
+</div>
+<div class="metric-value" id="metricPaymentsReceived">
+          ₹0
+        </div>
+<div class="metric-footer">
+          Valid payments recorded
+        </div>
+</article>
+<article class="metric-card">
+<div class="metric-card-header">
+<span class="metric-label">Outstanding</span>
+<span class="metric-icon metric-icon-orange">
+<span data-dashboard-icon="outstanding"></span>
+</span>
+</div>
+<div class="metric-value" id="metricOutstandingBalance">
+          ₹0
+        </div>
+<div class="metric-footer">
+          Remaining student fee balance
+        </div>
+</article>
+<article class="metric-card">
+<div class="metric-card-header">
+<span class="metric-label">Total RTE Students</span>
+<span class="metric-icon metric-icon-blue">
+<span data-dashboard-icon="students"></span>
+</span>
+</div>
+<div class="metric-value" id="metricTotalRteStudents">
+          0
+        </div>
+<div class="metric-footer">
+          Active students funded under RTE
+        </div>
+</article>
+<article class="metric-card">
+<div class="metric-card-header">
+<span class="metric-label">Total RTE Amount</span>
+<span class="metric-icon metric-icon-green">
+<span data-dashboard-icon="fees"></span>
+</span>
+</div>
+<div class="metric-value" id="metricTotalRteAmount">
+          ₹0
+        </div>
+<div class="metric-footer">
+          Fees assigned to active RTE students
+        </div>
+</article>
+</div>
+<div class="dashboard-grid">
+<article class="dashboard-panel">
+<div class="panel-header">
+<div>
+<h3 class="panel-title">Collection Progress</h3>
+<p class="panel-subtitle">
+              Payments received against total fees.
+            </p>
+</div>
+<div class="collection-rate-badge" id="collectionRateBadge">
+            0%
+          </div>
+</div>
+<div class="collection-progress-track">
+<div class="collection-progress-bar" id="collectionProgressBar" style="width: 0%;"></div>
+</div>
+<div class="collection-summary">
+<div>
+<span class="collection-summary-label">
+              Collected
+            </span>
+<strong id="collectionReceived">
+              ₹0
+            </strong>
+</div>
+<div>
+<span class="collection-summary-label">
+              Outstanding
+            </span>
+<strong id="collectionOutstanding">
+              ₹0
+            </strong>
+</div>
+</div>
+</article>
+<article class="dashboard-panel">
+<div class="panel-header">
+<div>
+<h3 class="panel-title">Student Payment Status</h3>
+<p class="panel-subtitle">
+              Current status across active student accounts.
+            </p>
+</div>
+</div>
+<div class="status-list">
+<div class="status-item">
+<span class="status-dot status-paid"></span>
+<span class="status-name">
+              Fully Paid
+            </span>
+<strong id="statusFullyPaid">
+              0
+            </strong>
+</div>
+<div class="status-item">
+<span class="status-dot status-partial"></span>
+<span class="status-name">
+              Partially Paid
+            </span>
+<strong id="statusPartiallyPaid">
+              0
+            </strong>
+</div>
+<div class="status-item">
+<span class="status-dot status-unpaid"></span>
+<span class="status-name">
+              Unpaid
+            </span>
+<strong id="statusUnpaid">
+              0
+            </strong>
+</div>
+<div class="status-item">
+<span class="status-dot status-rte"></span>
+<span class="status-name">
+              RTE
+            </span>
+<strong id="statusRte">
+              0
+            </strong>
+</div>
+</div>
+</article>
+</div>
+<article class="dashboard-panel recent-payments-panel">
+<div class="panel-header">
+<div>
+<h3 class="panel-title">Recent Payments</h3>
+<p class="panel-subtitle">
+            Five most recently recorded valid payments.
+          </p>
+</div>
+<span class="updated-time" id="dashboardUpdatedAt"></span>
+</div>
+<div class="table-wrapper">
+<table class="dashboard-table">
+<thead>
+<tr>
+<th>Date</th>
+<th>Student</th>
+<th>Payment ID</th>
+<th>Method</th>
+<th>Reference</th>
+<th class="amount-column">Amount</th>
+</tr>
+</thead>
+<tbody id="recentPaymentsBody"></tbody>
+</table>
+<div class="empty-table-message hidden" id="recentPaymentsEmpty">
+          No payments have been recorded yet.
+        </div>
+</div>
+</article>
+</div>
+</section>
